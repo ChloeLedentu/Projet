@@ -1,12 +1,10 @@
 package com.plb.projet.model;
 
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -16,11 +14,6 @@ public class Cd extends Item {
     @Column(name = "nbTitle", nullable = false)
     private int nbTitle;
 
-    /* Foreign Key */
-
-    @OneToMany(mappedBy = "cd")
-    private Set<CdTitle> titles = new HashSet<>();
-
     /* CONSTRUCTOR */
 
     public Cd() {
@@ -28,7 +21,7 @@ public class Cd extends Item {
     }
 
     public Cd(String author, String title, String description, String image, LocalDate createdOn, LocalDate dateRelease, 
-            int quantity, Set<Borrow> borrows, int nbTitle, Set<CdTitle> titles) {
+            int quantity, Set<Borrow> borrows, int nbTitle) {
         super(author, title, description, image, createdOn, dateRelease, quantity, borrows);
         this.nbTitle = nbTitle;
     }
@@ -43,13 +36,6 @@ public class Cd extends Item {
         this.nbTitle = nbTitle;
     }
 
-    public Set<CdTitle> getTitles() {
-        return titles;
-    }
-
-    public void setTitles(Set<CdTitle> titles) {
-        this.titles = titles;
-    }
 
     @Override
     public String toString() {

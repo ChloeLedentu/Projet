@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -38,7 +37,7 @@ public class Borrow {
     @ManyToOne
     private Member member;
 
-    @ManyToMany(mappedBy = "borrows", cascade = CascadeType.REMOVE)
+    @ManyToMany(mappedBy = "borrows")
     private Set<Item> items = new HashSet<>();
 
     /* CONSTRUCTOR */
