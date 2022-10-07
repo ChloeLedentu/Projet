@@ -1,5 +1,6 @@
 package com.plb.projet;
 
+import java.time.LocalDate;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -8,6 +9,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.StandardEnvironment;
 
+import com.plb.projet.model.Book;
+import com.plb.projet.model.Borrow;
+import com.plb.projet.model.Cd;
+import com.plb.projet.model.Dvd;
+import com.plb.projet.model.Item;
+import com.plb.projet.model.Member;
 import com.plb.projet.repository.BookRepository;
 import com.plb.projet.repository.BorrowRepository;
 import com.plb.projet.repository.CdRepository;
@@ -26,5 +33,5 @@ public class ProjetApplication {
         application.run(args);
     }
 
-   
+ 
 }
