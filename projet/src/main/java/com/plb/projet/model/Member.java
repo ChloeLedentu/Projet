@@ -37,9 +37,6 @@ public class Member {
     @Column(name = "nbBorrow")
     private int nbBorrow;
 
-    @Column(name = "role", nullable = false, length = 6)
-    private String role;
-
     /* Foreign Key */
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
@@ -51,14 +48,12 @@ public class Member {
 
     }
 
-    public Member(String email, String lastname, String firstname, String password, int nbBorrow, String role,
-            Set<Borrow> borrows) {
+    public Member(String email, String lastname, String firstname, String password, int nbBorrow, Set<Borrow> borrows) {
         this.email = email;
         this.lastname = lastname;
         this.firstname = firstname;
         this.password = password;
         this.nbBorrow = nbBorrow;
-        this.role = role;
         this.borrows = borrows;
     }
 
@@ -112,13 +107,6 @@ public class Member {
         this.nbBorrow = nbBorrow;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 
     public Set<Borrow> getBorrows() {
         return borrows;
@@ -130,7 +118,7 @@ public class Member {
 
     @Override
     public String toString() {
-        return "Membre [id=" + id + ", prénom=" + firstname + ", nom=" + lastname + ", role=" + role + ", mot de passe="
+        return "Membre [id=" + id + ", prénom=" + firstname + ", nom=" + lastname + ", mot de passe="
                 + password + ", email=" + email + ", nombre réservations =" + nbBorrow + "]";
     }
 }

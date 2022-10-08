@@ -25,8 +25,9 @@ import org.hibernate.annotations.Type;
 public class Item {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "titleSequenceGenerator")
-    @SequenceGenerator(name = "titleSequenceGenerator", allocationSize = 1)
+    //@GeneratedValue(strategy = GenerationType.AUTO, generator = "titleSequenceGenerator")
+    //@SequenceGenerator(name = "titleSequenceGenerator", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "author", nullable = false)
@@ -53,7 +54,7 @@ public class Item {
     /* Foreign Key */
 
     @ManyToMany
-    @JoinTable(name = "borrow_item", joinColumns = @JoinColumn(name = "borrow_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "item_id", referencedColumnName = "id"))
+    @JoinTable(name = "borrow_item", joinColumns = @JoinColumn(name = "borrow_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
     private Set<Borrow> borrows = new HashSet<>();
 
     /* CONTRUCTOR */

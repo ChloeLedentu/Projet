@@ -1,8 +1,8 @@
 
-INSERT INTO MEMBER VALUES(1,'daniel@gmail.com', 'daniel', 'Jean', 0, 'psw', 'user')
-INSERT INTO MEMBER VALUES(2, 'admin@gmail.com', 'admin', 'ad', 0, 'pswadmin', 'admin')
-INSERT INTO MEMBER VALUES(3,'bob@gmail.com', 'bob', 'Dupend', 0, 'psw', 'user')
-INSERT INTO MEMBER VALUES(4,'kael@gmail.com', 'kael', 'Dumont', 0, 'psw', 'user')
+INSERT INTO MEMBER VALUES(1,'daniel@gmail.com', 'daniel', 'Jean', 0, 'psw')
+INSERT INTO MEMBER VALUES(2, 'admin@gmail.com', 'admin', 'ad', 0, 'pswadmin')
+INSERT INTO MEMBER VALUES(3,'bob@gmail.com', 'bob', 'Dupend', 0, 'psw')
+INSERT INTO MEMBER VALUES(4,'kael@gmail.com', 'kael', 'Dumont', 0, 'psw')
 
 INSERT INTO ITEM VALUES (1, 'Metallica', '2022-10-07', '1991-08-13', 'Après le succès des éditions Super Deluxe de Kill’ Em All, Ride the Lightning, Master Of Puppets ...And Justice For All voici le très attendu Black Album. \n De mémoire de fans jamais le contenu d’une édition Super Deluxe n’a été aussi riche. Avec 6 vinyles, 14 CD, 5 DVD, un hardbook, un poster, et des pins. Le groupe a bien sûr remasterisé l’album, mais il a surtout plongé dans les archives pour nous offrir de nombreux enregistrements et captations vidéo, inédits à ce jour. \n Ces témoignages rendent compte de la vie du groupe en studio à l’époque de l’enregistrement de l’album, mais également de leur incroyable présence scénique à travers les live inédits.', null, 4, 'Black')
 INSERT INTO CD VALUES (12, 1)
@@ -26,4 +26,4 @@ INSERT INTO BORROW VALUES (1, '2022-10-08', '2022-10-01', 1, 1)
 INSERT INTO BORROW_ITEM VALUES (1,1)
 
 INSERT INTO BORROW VALUES (2, '2022-10-08', '2022-10-01', 2, 1)
-INSERT INTO BORROW_ITEM VALUES (5,2)
+INSERT INTO BORROW_ITEM VALUES (1,2)

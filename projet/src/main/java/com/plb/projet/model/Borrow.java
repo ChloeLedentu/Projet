@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "borrow")
 public class Borrow {
@@ -37,7 +39,8 @@ public class Borrow {
     @ManyToOne
     private Member member;
 
-    @ManyToMany(mappedBy = "borrows")
+    @ManyToMany( mappedBy = "borrows")
+    @JsonIgnore
     private Set<Item> items = new HashSet<>();
 
     /* CONSTRUCTOR */

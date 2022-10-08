@@ -43,9 +43,9 @@ public class MemberServiceTest {
     @Order(2)
     public void should_find_all_members() {
         
-        Member member1 = new Member("annie@gmail.com", "Lopez", "Annie", "sa", 0, "user", null);
+        Member member1 = new Member("annie@gmail.com", "Lopez", "Annie", "sa", 0, null);
         entityManager.persist(member1);
-        Member member2 = new Member("Marie@gmail.com", "Juno", "Marie", "sa", 0, "user", null);
+        Member member2 = new Member("Marie@gmail.com", "Juno", "Marie", "sa", 0, null);
         entityManager.persist(member2);
 
         Iterable members = memberRepository.findAll();
@@ -57,7 +57,7 @@ public class MemberServiceTest {
     @Test
     @Order(3)
     public void should_find_member_by_email() {
-        Member member1 = new Member("annie@gmail.com", "Lopez", "Annie", "sa", 0, "user", null);
+        Member member1 = new Member("annie@gmail.com", "Lopez", "Annie", "sa", 0, null);
         entityManager.persist(member1);
 
         Member foundMember = memberRepository.findByEmail(member1.getEmail());
@@ -68,7 +68,7 @@ public class MemberServiceTest {
     @Test
     @Order(4)
     public void should_find_by_id() {
-        Member member1 = new Member("annie@gmail.com", "Lopez", "Annie", "sa", 0, "user", null);
+        Member member1 = new Member("annie@gmail.com", "Lopez", "Annie", "sa", 0, null);
         entityManager.persist(member1);
 
         Member foundMember = memberRepository.findById(member1.getId()).get();
@@ -80,11 +80,11 @@ public class MemberServiceTest {
     @Test
     @Order(5)
     public void should_update_member_by_id() {
-        Member member1 = new Member("phanie@gmail.com", "Pnod", "Phanie", "bla", 0, "user", null);
+        Member member1 = new Member("phanie@gmail.com", "Pnod", "Phanie", "bla", 0, null);
         entityManager.persist(member1);
 
         //many differents informations 
-        Member updateMember = new Member("juno@gmail.com", "Juno", "Marie", "slo", 0, "admin", null);
+        Member updateMember = new Member("juno@gmail.com", "Juno", "Marie", "slo", 0, null);
 
         //only firstname and lastname change
         Member memb = memberRepository.findById(member1.getId()).get();
@@ -100,8 +100,8 @@ public class MemberServiceTest {
     @Test
     @Order(6)
     public void should_delete_member_by_id() {
-        entityManager.persist(new Member("annie@gmail.com", "Lopez", "Annie", "sa", 0, "user", null));
-        entityManager.persist(new Member("juno@gmail.com", "Juno", "Marie", "slo", 0, "admin", null));
+        entityManager.persist(new Member("annie@gmail.com", "Lopez", "Annie", "sa", 0, null));
+        entityManager.persist(new Member("juno@gmail.com", "Juno", "Marie", "slo", 0, null));
 
         memberRepository.deleteAll();
         assertThat(memberRepository.findAll()).isEmpty();
