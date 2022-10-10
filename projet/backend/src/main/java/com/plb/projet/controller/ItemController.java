@@ -76,10 +76,10 @@ public class ItemController {
         else if(name.equals("Dvd")) {
             return new ResponseEntity<>(itemRepository.findAllDvd(), HttpStatus.OK);
         }
-        else if(name == "Cd") {
+        else if(name.equals("Cd")) {
             return new ResponseEntity<>(itemRepository.findAllCd(), HttpStatus.OK);
         }
-        else if(name == "Book") {
+        else if(name.equals("Book")) {
             return new ResponseEntity<>(itemRepository.findAllBook(), HttpStatus.OK);
         }
         else return new ResponseEntity<>(HttpStatus.NOT_FOUND);

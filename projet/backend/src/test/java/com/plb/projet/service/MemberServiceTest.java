@@ -31,11 +31,9 @@ public class MemberServiceTest {
 
     @Test
     @Order(1)
-    public void should_find_members_if_repository_not_empty() {
+    public void should_find_members_if_repository_isnot_empty() {
         
         Iterable members = memberRepository.findAll();
-        
-        // error if true
         assertThat(members).isNotEmpty();
     }
 
@@ -51,7 +49,6 @@ public class MemberServiceTest {
         Iterable members = memberRepository.findAll();
 
         assertThat(members).hasSize(2).contains(member1, member2);
-
     }
 
     @Test
@@ -74,7 +71,6 @@ public class MemberServiceTest {
         Member foundMember = memberRepository.findById(member1.getId()).get();
         
         assertThat(foundMember).isEqualTo(member1);
-
     }
 
     @Test

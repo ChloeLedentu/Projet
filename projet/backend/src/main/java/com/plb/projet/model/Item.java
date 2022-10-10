@@ -25,9 +25,8 @@ import org.hibernate.annotations.Type;
 public class Item {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO, generator = "titleSequenceGenerator")
-    //@SequenceGenerator(name = "titleSequenceGenerator", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "titleSequenceGenerator")
+    @SequenceGenerator(name = "titleSequenceGenerator", allocationSize = 1)
     private Long id;
 
     @Column(name = "author", nullable = false)
@@ -64,8 +63,7 @@ public class Item {
     }
 
     public Item(String author, String title, String description, String image, LocalDate createdOn,
-            LocalDate dateRelease,
-            int quantity, Set<Borrow> borrows) {
+            LocalDate dateRelease, int quantity, Set<Borrow> borrows) {
         this.author = author;
         this.title = title;
         this.dateRelease = dateRelease;
