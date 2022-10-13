@@ -37,6 +37,7 @@ public class Borrow {
     /* Foreign Key */
 
     @ManyToOne
+    @JsonIgnore
     private Member member;
 
     @ManyToMany( mappedBy = "borrows")

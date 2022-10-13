@@ -19,6 +19,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "item")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -53,6 +55,7 @@ public class Item {
     /* Foreign Key */
 
     @ManyToMany
+    @JsonIgnore
     @JoinTable(name = "borrow_item", joinColumns = @JoinColumn(name = "borrow_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
     private Set<Borrow> borrows = new HashSet<>();
 

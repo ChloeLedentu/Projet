@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "member")
 public class Member {
@@ -40,6 +42,7 @@ public class Member {
     /* Foreign Key */
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private Set<Borrow> borrows = new HashSet<>();
 
     /* CONSTRUCTOR */

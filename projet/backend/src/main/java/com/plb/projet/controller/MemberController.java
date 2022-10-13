@@ -1,8 +1,10 @@
 package com.plb.projet.controller;
 
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,7 @@ import com.plb.projet.model.Member;
 import com.plb.projet.repository.MemberRepository;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8081")
 @RequestMapping("/api")
 public class MemberController {
 
@@ -43,5 +46,10 @@ public class MemberController {
                 // ! creation du token 
                 return ResponseEntity.ok(member);
         }
+    }
+    @GetMapping("/members")
+    public ResponseEntity<List<Member>> getAll(){
+        List<Member> allmember = memberRepository.findAll();
+        return ResponseEntity.ok(allmember);
     }
 }

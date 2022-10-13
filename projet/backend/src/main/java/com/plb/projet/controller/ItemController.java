@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,13 +17,14 @@ import com.plb.projet.model.Item;
 import com.plb.projet.repository.ItemRepository;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8081")
 @RequestMapping("/api")
 public class ItemController {
     
     @Autowired
     ItemRepository itemRepository;
     
-    @GetMapping("/news")
+    @GetMapping("/items")
     public ResponseEntity<List<Item>> getItemByCreated(){
         
         try {
@@ -56,7 +58,7 @@ public class ItemController {
         }
     }
     
-    @GetMapping("/{id}")
+    @GetMapping("/item/{id}")
     public ResponseEntity<Item> getItemById(@PathVariable("id") long id) {
 
         Optional<Item> itemData = itemRepository.findById(id);
@@ -68,7 +70,7 @@ public class ItemController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
     
-    @GetMapping("/item/{name}")
+    @GetMapping("/item-{name}")
     public ResponseEntity<List<Item>> getItemByName(@PathVariable("name") String name){
         
         if(name.isEmpty()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
