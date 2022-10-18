@@ -16,6 +16,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
 
@@ -31,9 +32,11 @@ public class Item {
     @SequenceGenerator(name = "titleSequenceGenerator", allocationSize = 1)
     private Long id;
 
+    @Size (max = 120)
     @Column(name = "author", nullable = false)
     private String author;
 
+    @Size (max = 120)
     @Column(name = "title", nullable = false)
     private String title;
 
@@ -44,6 +47,7 @@ public class Item {
     @Type(type = "text")
     private String description;
 
+    @Size (max = 225)
     @Column(name = "image")
     private String image;
 

@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "dvd")
@@ -14,6 +15,7 @@ public class Dvd extends Item {
     @Column(name = "duration")
     private int duration;
 
+    @Size (max = 35)
     @Column(name = "type", nullable = false)
     private String type;
 
