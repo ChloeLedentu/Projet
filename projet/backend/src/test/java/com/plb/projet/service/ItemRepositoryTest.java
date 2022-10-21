@@ -24,7 +24,7 @@ import com.plb.projet.model.Users;
 import com.plb.projet.repository.ItemRepository;
 
 @DataJpaTest
-public class ItemServiceTest {
+public class ItemRepositoryTest {
 
     @Autowired
     private TestEntityManager entityManager;

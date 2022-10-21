@@ -17,7 +17,7 @@ import com.plb.projet.model.Users;
 import com.plb.projet.repository.UsersRepository;
 
 @DataJpaTest
-public class UserServiceTest {
+public class UserRepositoryTest {
     
     @Autowired
     private UsersRepository usersRepository;
