@@ -38,7 +38,7 @@ public class Borrow {
 
     @ManyToOne
     @JsonIgnore
-    private Member member;
+    private Users users;
 
     @ManyToMany( mappedBy = "borrows")
     @JsonIgnore
@@ -46,11 +46,11 @@ public class Borrow {
 
     /* CONSTRUCTOR */
 
-    public Borrow(LocalDate dateTake, LocalDate dateReturn, int quantity, Member member, Set<Item> items) {
+    public Borrow(LocalDate dateTake, LocalDate dateReturn, int quantity, Users users, Set<Item> items) {
         this.dateTake = dateTake;
         this.dateReturn = dateReturn;
         this.quantity = quantity;
-        this.member = member;
+        this.users = users;
         this.items = items;
     }
 
@@ -84,12 +84,12 @@ public class Borrow {
         this.dateReturn = dateReturn;
     }
 
-    public Member getMember() {
-        return member;
+    public Users getUsers() {
+        return users;
     }
 
-    public void setMember(Member member) {
-        this.member = member;
+    public void setUsers(Users users) {
+        this.users = users;
     }
 
     public int getQuantity() {
@@ -111,7 +111,7 @@ public class Borrow {
     @Override
     public String toString() {
         return "Réservation [id=" + id +
-                ", membre=" + member + 
+                ", membre=" + users + 
                 ", pris le=" + dateTake + 
                 ", Date rendu=" + dateReturn + 
                 ", quantité=" + quantity + 

@@ -3,71 +3,69 @@ package com.plb.projet.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.Generated;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.micrometer.core.lang.Nullable;
+
 @Entity
-@Table(name = "member", uniqueConstraints = {
+@Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = "email")
 })
-public class Member {
+public class Users {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "memberSequenceGenerator")
-    @SequenceGenerator(name = "memberSequenceGenerator", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usersSequenceGenerator")
+    @SequenceGenerator(name = "usersSequenceGenerator", allocationSize = 1)
     private Long id;
 
     @NotBlank
-    @Size (max = 40)
+    @Size(max = 40)
     @Column(name = "email", nullable = false, length = 128)
     private String email;
 
-    @Size (max = 25)
-    @Column(name = "lastname", length = 128)
-    private String lastname;
-
-    @Size (max = 35)
+    @Size(max = 35)
+    @NotBlank
     @Column(name = "firstname", length = 128)
     private String firstname;
 
-    @Size (max = 120)
+    @Size(max = 25)
+    @NotBlank
+    @Column(name = "lastname", length = 128)
+    private String lastname;
+
+    @Size(max = 120)
+    @NotBlank
     @Column(name = "password", nullable = false, length = 128)
     private String password;
-
+    
     @Column(name = "nbBorrow")
+    @Nullable
     private int nbBorrow;
+
 
     /* Foreign Key */
 
-    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "users", cascade = CascadeType.REMOVE)
     @JsonIgnore
     private Set<Borrow> borrows = new HashSet<>();
 
     /* CONSTRUCTOR */
 
-    public Member() {
-
+    public Users() {
     }
 
-    public Member(String email, String lastname, String firstname, String password, int nbBorrow, Set<Borrow> borrows) {
-        this.email = email;
+    public Users(String firstname, String lastname, String email, String password) {
         this.lastname = lastname;
         this.firstname = firstname;
+        this.email = email;
         this.password = password;
-        this.nbBorrow = nbBorrow;
-        this.borrows = borrows;
     }
 
     /* GETTERS SETTERS */
@@ -78,14 +76,6 @@ public class Member {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getLastname() {
@@ -102,6 +92,14 @@ public class Member {
 
     public void setFirstname(String firstname) {
         this.firstname = firstname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -130,7 +128,7 @@ public class Member {
 
     @Override
     public String toString() {
-        return "Membre [id=" + id + ", prénom=" + firstname + ", nom=" + lastname + ", mot de passe="
+        return "User [id=" + id + ", prénom=" + firstname + ", nom=" + lastname + ", mot de passe="
                 + password + ", email=" + email + ", nombre réservations =" + nbBorrow + "]";
     }
 }

@@ -11,20 +11,29 @@ import com.plb.projet.model.Item;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long>{
     
-    List<Item> findAll();
+   //************** ITEM ******************
     
-    //Search bar
-    @Query("SELECT i FROM Item i WHERE i.title LIKE %?1% or i.author LIKE %?1% ")
-    List<Item> findByTitleOrAuthor(String title, String author);
-
+    @Query("FROM Item i ORDER BY i.createdOn ASC")
     List<Item> findAllByOrderByCreatedOnAsc();
     
-    @Query("SELECT d from Dvd d")
+     //Search bar
+    @Query("FROM Item i WHERE ( i.title LIKE %?1% OR i.author LIKE %?1% ) AND i.quantity > 0 ")
+    List<Item> findByTitleOrAuthor(String title, String author);
+    
+    //SORT BY
+    @Query("FROM Item i ORDER BY i.dateRelease ASC")
+    List<Item> findAllByOrderByDateReleaseAsc();
+    @Query("FROM Item i ORDER BY i.title ASC")
+    List<Item> findAllByOrderByTitleAsc();
+    @Query("FROM Item i ORDER BY i.author ASC ")
+    List<Item> findAllByOrderByAuthorAsc();
+    
+    
+    @Query("FROM Dvd d")
     List<Item> findAllDvd();
-    
-    @Query("from Cd")
+    @Query("FROM Cd c")
     List<Item> findAllCd();
-    
-    @Query("from Book")
+    @Query("FROM Book b")
     List<Item> findAllBook();
+    
 }

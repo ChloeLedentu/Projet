@@ -1,9 +1,4 @@
-
-INSERT INTO MEMBER VALUES(1,'daniel@gmail.com', 'daniel', 'Jean', 0, 'password')
-INSERT INTO MEMBER VALUES(2, 'paul@gmail.com', 'paul', 'Nagot', 0, 'password')
-INSERT INTO MEMBER VALUES(3,'bob@gmail.com', 'bob', 'Dupend', 0, 'password')
-INSERT INTO MEMBER VALUES(4,'kael@gmail.com', 'kael', 'Dumont', 0, 'password')
-
+INSERT INTO USERS VALUES (1, 'toto@f.c', 'toto', 'titi', 1, '$2a$10$8QSgK4CkeuYy1/sTJZ0H9uyz6grug9Bd/D0oJWDdV/ruT5Hw3e2Vu')
 
 INSERT INTO ITEM VALUES (1, 'metallica', '2022-10-07', '1991-08-13', 'Après le succès des éditions Super Deluxe de Kill’ Em All, Ride the Lightning, Master Of Puppets ...And Justice For All voici le très attendu Black Album. De mémoire de fans jamais le contenu d’une édition Super Deluxe n’a été aussi riche. Avec 6 vinyles, 14 CD, 5 DVD, un hardbook, un poster, et des pins. Le groupe a bien sûr remasterisé l’album, mais il a surtout plongé dans les archives pour nous offrir de nombreux enregistrements et captations vidéo, inédits à ce jour. Ces témoignages rendent compte de la vie du groupe en studio à l’époque de l’enregistrement de l’album, mais également de leur incroyable présence scénique à travers les live inédits.', 'CD-Metallica-Black.jpg', 1, 'black')
 INSERT INTO CD VALUES (12, 1)
@@ -43,12 +38,5 @@ INSERT INTO BOOK VALUES ( 232600227l, 11)
 INSERT INTO ITEM VALUES (12, 'j.k. rowling', '2022-10-12', '2017-10-10', 'Lorsqu''il n''était encore qu''un bébé, les parents de Harry Potter furent tués par un sorcier puissant. Ayant miraculeusement survécu à cette attaque, Harry n''en n''a gardé qu''une cicatrice sur le front et a été adopté par sa tante et son horrible famille.', 'BOOK-Harry_Potter_a_lecole_des_sorciers.jpg', 5, 'harry potter à l''école des sorciers')
 INSERT INTO BOOK VALUES ( 2075145938l, 12)
 
-
-INSERT INTO BORROW VALUES (1, '2022-10-08', '2022-10-01', 1, 1)
-INSERT INTO BORROW_ITEM (ITEM_ID, BORROW_ID) VALUES (1,1)
-
-INSERT INTO BORROW VALUES (2, '2022-10-08', '2022-10-01', 2, 1)
-INSERT INTO BORROW_ITEM (ITEM_ID, BORROW_ID) VALUES (2,2)
-
-INSERT INTO BORROW VALUES (3, '2022-10-08', '2022-10-01', 2, 2)
-INSERT INTO BORROW_ITEM (ITEM_ID, BORROW_ID) VALUES (2,3)
+INSERT INTO BORROW VALUES (1, '2022-10-12', '2022-10-14', 1, 1)
+INSERT INTO BORROW_ITEM VALUES (1,1)
