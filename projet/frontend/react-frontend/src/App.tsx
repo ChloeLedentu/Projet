@@ -5,7 +5,6 @@ import "./App.css";
 import { useEffect, useState } from "react";
 
 import * as AuthService from "./services/AuthService";
-//import EventBus from "./common/EventBus";
 import UserData from "./types/User";
 
 import Accueil from './components/Accueil';
@@ -22,7 +21,7 @@ const App: React.FC = () => {
   const [currentUser, setCurrentUser] = useState<UserData | undefined>(undefined);
 
   const logOut = () => {
-  //  AuthService.logout();
+    AuthService.logout();
     setCurrentUser(undefined);
   };
 
@@ -33,11 +32,6 @@ const App: React.FC = () => {
       setCurrentUser(user);
     }
 
-   // EventBus.on("logout", logOut);
-
-    /*return () => {
-      EventBus.remove("logout", logOut);
-    };*/
   }, []);
 
 
