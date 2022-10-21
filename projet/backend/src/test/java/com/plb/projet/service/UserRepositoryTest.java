@@ -39,7 +39,7 @@ public class UserRepositoryTest {
     @Test
     @Order(2)
     public void should_find_user_by_email() {
-       Users findUser = usersRepository.findByEmail("toto@f.c");
-       assertEquals("titi", findUser.getLastname());
+       Optional<Users> findUser = usersRepository.findByEmail("toto@f.c");
+       assertEquals("titi", findUser.get().getLastname());
     }
 }

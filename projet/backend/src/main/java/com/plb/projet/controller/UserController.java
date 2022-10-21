@@ -2,6 +2,7 @@ package com.plb.projet.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,12 +36,12 @@ public class UserController {
     @GetMapping("/profil/{email}")
     public ResponseEntity<Users> userAccess(@PathVariable("email") String email) {
 
-        Users usersData = usersRepository.findByEmail(email);
+        Optional<Users> usersData = usersRepository.findByEmail(email);
 
         if (usersData.equals(null))
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         else
-            return new ResponseEntity<>(usersData, HttpStatus.OK);
+            return new ResponseEntity<>(usersData.get(), HttpStatus.OK);
 
     }
     @GetMapping("/user/borrow/{id}")
