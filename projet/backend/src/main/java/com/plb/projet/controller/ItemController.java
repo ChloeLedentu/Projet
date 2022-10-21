@@ -17,7 +17,7 @@ import com.plb.projet.model.Item;
 import com.plb.projet.repository.ItemRepository;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8081")
+@CrossOrigin(origins = "*")
 @RequestMapping("/api")
 public class ItemController {
 
