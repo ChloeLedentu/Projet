@@ -80,13 +80,11 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("Utilisateur enregistré avec succès!"));
     }
 
-    /*
-     * @PostMapping("/signout")
-     * public ResponseEntity<?> logoutUser() {
-     * //ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
-     * //return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE,
-     * cookie.toString()) .body(new MessageResponse("Vous etez déconnecté !"));
-     * }
-     */
+    
+     @PostMapping("/signout")
+      public ResponseEntity<?> logoutUser() {
+         return null;
+     }
+     
 
 }
