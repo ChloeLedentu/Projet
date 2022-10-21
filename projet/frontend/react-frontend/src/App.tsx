@@ -15,6 +15,7 @@ import Signin from './components/Signin';
 import Profil from './components/Profil';
 import ItemDetail from "./components/ItemDetail";
 import Register from "./components/Register";
+import BorrowList from "./components/Borrow";
 
 
 const App: React.FC = () => {
@@ -92,6 +93,13 @@ const App: React.FC = () => {
               )}
               {currentUser && (
                 <li className="nav-item">
+                  <Link to={"/reservation"} className="nav-link">
+                    Réservations
+                  </Link>
+                </li>
+              )}
+              {currentUser && (
+                <li className="nav-item">
                   <a href="/login" className="nav-link" onClick={logOut}>
                     Deconnexion
                   </a>
@@ -112,6 +120,7 @@ const App: React.FC = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/profil" element={<Profil />} />
           <Route path="/item/:id" element={<ItemDetail />} />
+          <Route path="/reservation" element={<BorrowList />} />
         </Routes>
       </div>
     </div>

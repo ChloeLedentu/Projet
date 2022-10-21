@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.plb.projet.model.Borrow;
@@ -44,8 +45,8 @@ public class UserController {
             return new ResponseEntity<>(usersData.get(), HttpStatus.OK);
 
     }
-    @GetMapping("/user/borrow/{id}")
-    public ResponseEntity<List<Borrow>> BorrowByUser(@PathVariable("id") long id) {
+    @GetMapping("/user/borrow/")
+    public ResponseEntity<List<Borrow>> BorrowByUser(@RequestParam long id) {
 
         List<Borrow> borrowUser = new ArrayList<Borrow>();
         borrowRepository.findByUsers(id).forEach(borrowUser::add);

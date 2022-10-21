@@ -87,9 +87,10 @@ public class ItemController {
     }
 
     @GetMapping("/item/borrow/")
-    public ResponseEntity<List<Borrow>> BorrowByItemr(@RequestParam long id) {
+    public ResponseEntity<List<Borrow>> BorrowByItem(@RequestParam long id) {
 
-        List<Borrow> borrowItems = borrowRepository.findByItems(id);
+        List<Borrow> borrowItems = new ArrayList<Borrow>();
+        borrowRepository.findByItems(id).forEach(borrowItems::add);
 
         if (borrowItems.isEmpty())
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
