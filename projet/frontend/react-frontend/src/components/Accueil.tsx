@@ -1,16 +1,19 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import { Link } from 'react-router-dom';
 
+import * as AuthService from "../services/AuthService";
 import ItemService from "../services/ItemService";
 import ItemData from "../types/Item";
 
 import { FcNext } from 'react-icons/fc';
 import { BsSearch } from 'react-icons/bs';
+import UserData from "../types/User";
 
 const ItemsList: React.FC = () => {
 
     const [items, setItems] = useState<Array<ItemData>>([]);
     const [search, setSearch] = useState("");
+    const [currentUser, setCurrentUser] = useState<UserData | undefined>(undefined);
 
     const findByTitleOrAuthor = () => {
         ItemService.findByTitleOrAuthor(search)
@@ -73,6 +76,10 @@ const ItemsList: React.FC = () => {
     }
 
     useEffect(() => {
+        const user = AuthService.getCurrentUser();
+        if (user) {
+            setCurrentUser(user);
+        }
         retrieveItems();
     }, []);
 
@@ -138,9 +145,11 @@ const ItemsList: React.FC = () => {
                                                     </Link>
                                                 </p>
                                             </div>
+                                            {currentUser && (
                                             <div className="card-footer justify-content-between">
                                                 <a className="btn btn-warning btn-round" href="#"><FcNext />Réserver</a>
                                             </div>
+                                            )}
                                         </div>
                                     </div>
                                 ))}

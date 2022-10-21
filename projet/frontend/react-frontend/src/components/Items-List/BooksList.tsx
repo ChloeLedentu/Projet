@@ -1,14 +1,17 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import { useParams, useNavigate, Link } from 'react-router-dom';
+import * as AuthService from "../../services/AuthService";
 
 import ItemService from "../../services/ItemService";
 import ItemData from "../../types/Item";
 
 import { FcNext } from 'react-icons/fc';
+import UserData from "../../types/User";
 
 const BooksList: React.FC = () => {
 
     const [items, setItems] = useState<Array<ItemData>>([]);
+    const [currentUser, setCurrentUser] = useState<UserData | undefined>(undefined);
 
     const retrieveItems = () => {
         ItemService.findByNameItem("Book")
@@ -21,6 +24,10 @@ const BooksList: React.FC = () => {
     };
 
     useEffect(() => {
+        const user = AuthService.getCurrentUser();
+        if (user) {
+            setCurrentUser(user);
+        }
         retrieveItems();
     }, []);
 
@@ -46,8 +53,13 @@ const BooksList: React.FC = () => {
                                                     Voir plus
                                                 </Link>
                                             </p>
-                                            <p className="card-description">Quantité restante : {item.quantity}</p>
-                                            <a className="btn btn-warning btn-round" href="#"><FcNext />Réserver</a>
+                                            {currentUser && (
+                                                <div>
+                                                    <p className="card-description">Quantité restante : {item.quantity}</p>
+                                                    <a className="btn btn-warning btn-round" href="#"><FcNext />Réserver</a>
+                                                </div>
+                                            )}
+
                                         </div>
                                         <hr />
                                     </div>
