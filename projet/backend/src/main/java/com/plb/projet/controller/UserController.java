@@ -1,5 +1,8 @@
 package com.plb.projet.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.plb.projet.model.Borrow;
 import com.plb.projet.model.Users;
+import com.plb.projet.repository.BorrowRepository;
 import com.plb.projet.repository.UsersRepository;
 
 @RestController
@@ -23,21 +28,32 @@ public class UserController {
 
     @Autowired
     AuthenticationManager authenticationManager;
+    
+    @Autowired
+    BorrowRepository borrowRepository;
 
-    @GetMapping("/profil-{email}")
+    @GetMapping("/profil/{email}")
     public ResponseEntity<Users> userAccess(@PathVariable("email") String email) {
-        try {
 
-            Users usersData = usersRepository.findByEmail(email);
+        Users usersData = usersRepository.findByEmail(email);
 
-            if (usersData.equals(null))
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            else
-                return new ResponseEntity<>(usersData, HttpStatus.OK);
+        if (usersData.equals(null))
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else
+            return new ResponseEntity<>(usersData, HttpStatus.OK);
 
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    }
+    @GetMapping("/user/borrow/{id}")
+    public ResponseEntity<List<Borrow>> BorrowByUser(@PathVariable("id") long id) {
+
+        List<Borrow> borrowUser = new ArrayList<Borrow>();
+        borrowRepository.findByUsers(id).forEach(borrowUser::add);
+
+        if (borrowUser.isEmpty())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else
+            return new ResponseEntity<>(borrowUser, HttpStatus.OK);
+
     }
 
 }

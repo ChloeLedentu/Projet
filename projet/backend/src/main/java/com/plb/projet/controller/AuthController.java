@@ -1,6 +1,5 @@
 package com.plb.projet.controller;
 
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,22 +44,17 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> connexionUser(@Valid @RequestBody LoginRequest loginRequest) {
-        try {
 
-            Authentication authentication = authenticationManager
-                    .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
-                            loginRequest.getPassword()));
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
+                        loginRequest.getPassword()));
 
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            
-            String jwt = jwtUtils.generateJwtToken(authentication);
-            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getEmail()));
+        String jwt = jwtUtils.generateJwtToken(authentication);
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getEmail()));
 
     }
 
@@ -80,11 +74,13 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("Utilisateur enregistré avec succès!"));
     }
 
-    
-     @PostMapping("/signout")
-      public ResponseEntity<?> logoutUser() {
-         return null;
-     }
-     
+    @PostMapping("/signout")
+    public ResponseEntity<?> logoutUser() {
+        return null;
+
+        // ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
+        // return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE,
+        // cookie.toString()) .body(new MessageResponse("Vous etez déconnecté !"));
+    }
 
 }

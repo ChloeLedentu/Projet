@@ -38,7 +38,7 @@ const ItemsList: React.FC = () => {
     const setSortType = (e: ChangeEvent<HTMLSelectElement>) => {
         switch (e.target.value) {
             case '':
-                ItemService.getAll('').then((response: any) => {
+                ItemService.getAll("").then((response: any) => {
                     setItems(response.data);
                 })
                     .catch((e: Error) => {
