@@ -1,4 +1,4 @@
-INSERT INTO USERS VALUES (1, 'toto@f.c', 'toto', 'titi', 1, '$2a$10$8QSgK4CkeuYy1/sTJZ0H9uyz6grug9Bd/D0oJWDdV/ruT5Hw3e2Vu')
+INSERT INTO USERS (email, lastname, firstname, nbBorrow, password) VALUES ('toto@f.c', 'toto', 'titi', 2, '$2a$10$8QSgK4CkeuYy1/sTJZ0H9uyz6grug9Bd/D0oJWDdV/ruT5Hw3e2Vu')
 
 INSERT INTO ITEM VALUES (1, 'metallica', '2022-10-07', '1991-08-13', 'Après le succès des éditions Super Deluxe de Kill’ Em All, Ride the Lightning, Master Of Puppets ...And Justice For All voici le très attendu Black Album. De mémoire de fans jamais le contenu d’une édition Super Deluxe n’a été aussi riche. Avec 6 vinyles, 14 CD, 5 DVD, un hardbook, un poster, et des pins. Le groupe a bien sûr remasterisé l’album, mais il a surtout plongé dans les archives pour nous offrir de nombreux enregistrements et captations vidéo, inédits à ce jour. Ces témoignages rendent compte de la vie du groupe en studio à l’époque de l’enregistrement de l’album, mais également de leur incroyable présence scénique à travers les live inédits.', 'CD-Metallica-Black.jpg', 1, 'black')
 INSERT INTO CD VALUES (12, 1)
@@ -38,5 +38,8 @@ INSERT INTO BOOK VALUES ( 232600227l, 11)
 INSERT INTO ITEM VALUES (12, 'j.k. rowling', '2022-10-12', '2017-10-10', 'Lorsqu''il n''était encore qu''un bébé, les parents de Harry Potter furent tués par un sorcier puissant. Ayant miraculeusement survécu à cette attaque, Harry n''en n''a gardé qu''une cicatrice sur le front et a été adopté par sa tante et son horrible famille.', 'BOOK-Harry_Potter_a_lecole_des_sorciers.jpg', 5, 'harry potter à l''école des sorciers')
 INSERT INTO BOOK VALUES ( 2075145938l, 12)
 
-INSERT INTO BORROW VALUES (1, '2022-10-12', '2022-10-14', 1, 1)
+INSERT INTO BORROW (date_Return, date_Take, quantity, USERS_ID ) VALUES ('2022-10-12', '2022-10-10', 1, 1)
 INSERT INTO BORROW_ITEM VALUES (1,1)
+
+INSERT INTO BORROW (date_Return, date_Take, quantity, USERS_ID  ) VALUES ( null, '2022-10-10', 2, 1)
+INSERT INTO BORROW_ITEM VALUES (2,2)

@@ -26,7 +26,7 @@ import com.plb.projet.security.jwt.JwtUtils;
 import com.plb.projet.security.services.UserDetailsImpl;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/auth")
 public class AuthController {
 

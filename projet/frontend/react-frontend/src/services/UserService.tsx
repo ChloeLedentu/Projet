@@ -1,12 +1,18 @@
 import http from "../http-common";
+import BorrowData from "../types/Borrow";
 import UserData from "../types/User";
 
 const findByEmail = (email: string) => {
     return http.get<Array<UserData>>(`/profil/${email}`);
 };
 
-const ItemService = {
-    findByEmail,
+const findBorrow = (id: any) => {
+    return http.get<Array<BorrowData>>(`/user/borrow/${id}`);
 };
 
-export default ItemService;
+const UserService = {
+    findByEmail,
+    findBorrow
+};
+
+export default UserService;

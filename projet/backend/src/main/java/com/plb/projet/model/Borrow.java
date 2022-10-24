@@ -41,7 +41,6 @@ public class Borrow {
     private Users users;
 
     @ManyToMany( mappedBy = "borrows")
-    @JsonIgnore
     private Set<Item> items = new HashSet<>();
 
     /* CONSTRUCTOR */

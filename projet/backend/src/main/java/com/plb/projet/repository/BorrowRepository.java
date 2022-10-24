@@ -8,15 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.plb.projet.model.Borrow;
+import com.plb.projet.model.Users;
 
 @Repository
 public interface BorrowRepository extends JpaRepository<Borrow, Long> {
 
-    Optional<Borrow> findById(long id);
-    
-    List<Borrow> findByUsers(long id);
-    
-    List<Borrow> findByItems(long id);
-    
-    List<Borrow> findAll();
 }

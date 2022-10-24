@@ -8,9 +8,14 @@ const findByIdItem = (id: any) => {
     return http.get<Array<BorrowData>>(`/borrow/item/${id}`);
 };
 
+const returnBorrow = (id: any) => {
+    return http.put<BorrowData>(`/borrow/return/${id}`);
+}
+
 const BorrowService = {
     findByIdItem,
-    findByIdUser
+    findByIdUser,
+    returnBorrow
 };
 
 export default BorrowService;
