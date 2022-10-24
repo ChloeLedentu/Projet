@@ -23,6 +23,7 @@ const Login: React.FC<Props> = () => {
         const { username, password } = formValue;
         setMessage("");
         setLoading(true);
+console.log(username, password);
 
         login(username, password).then(
             () => {

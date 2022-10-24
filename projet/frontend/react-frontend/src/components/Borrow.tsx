@@ -24,6 +24,15 @@ const BorrowList: React.FC = () => {
             });
     };
  
+        /* 
+        id du borrow -> update return date à now
+        const returnBorrow = () => {
+            BorrowService.returnBorrow(id)
+            .catch((e: Error) => {
+                console.log(e.message);
+            });
+            window.location.reload();
+        };*/
 
     useEffect(() => {
         const user = AuthService.getCurrentUser();

@@ -21,8 +21,7 @@ import io.micrometer.core.lang.Nullable;
 public class Users {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usersSequenceGenerator")
-    @SequenceGenerator(name = "usersSequenceGenerator", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank

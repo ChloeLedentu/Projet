@@ -1,4 +1,4 @@
-INSERT INTO USERS (email, lastname, firstname, nbBorrow, password) VALUES ('toto@f.c', 'toto', 'titi', 2, '$2a$10$8QSgK4CkeuYy1/sTJZ0H9uyz6grug9Bd/D0oJWDdV/ruT5Hw3e2Vu')
+INSERT INTO USERS (email, lastname, firstname, nb_borrow, password) VALUES ('toto@f.c', 'toto', 'titi', 2, '$2a$10$8QSgK4CkeuYy1/sTJZ0H9uyz6grug9Bd/D0oJWDdV/ruT5Hw3e2Vu')
 
 INSERT INTO ITEM VALUES (1, 'metallica', '2022-10-07', '1991-08-13', 'Après le succès des éditions Super Deluxe de Kill’ Em All, Ride the Lightning, Master Of Puppets ...And Justice For All voici le très attendu Black Album. De mémoire de fans jamais le contenu d’une édition Super Deluxe n’a été aussi riche. Avec 6 vinyles, 14 CD, 5 DVD, un hardbook, un poster, et des pins. Le groupe a bien sûr remasterisé l’album, mais il a surtout plongé dans les archives pour nous offrir de nombreux enregistrements et captations vidéo, inédits à ce jour. Ces témoignages rendent compte de la vie du groupe en studio à l’époque de l’enregistrement de l’album, mais également de leur incroyable présence scénique à travers les live inédits.', 'CD-Metallica-Black.jpg', 1, 'black')
 INSERT INTO CD VALUES (12, 1)

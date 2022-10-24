@@ -21,8 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Borrow {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "borrowSequenceGenerator")
-    @SequenceGenerator(name = "borrowSequenceGenerator", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "dateTake", nullable = false)
