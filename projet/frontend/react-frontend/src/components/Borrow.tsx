@@ -43,7 +43,6 @@ const BorrowList: React.FC<Props> = () => {
     const BorrowReturn = (formValue: { id: number; quantity: number }) => {
         const {id, quantity } = formValue;
         setMessage("");
-        //réussir a ajouter l'id du borrow choisi
 
         BorrowService.returnBorrow(2, quantity).then(
             () => {
