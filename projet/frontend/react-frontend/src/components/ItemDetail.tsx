@@ -92,7 +92,7 @@ const ItemDetail: React.FC = () => {
                                     }
                                     <hr />
                                     <p className="card-description">Quantité restante : {currentItem.quantity}</p>
-                                    {currentUser && (
+                                    {currentUser && (currentItem.quantity > 0) && (
                                         <button className="btn btn-warning btn-round" onClick={newborrow}><FcNext />Réserver</button>
                                     )}
                                     {message && (

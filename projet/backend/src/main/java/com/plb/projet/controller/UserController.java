@@ -108,10 +108,10 @@ public class UserController {
     @PostMapping("/borrow/new/{userId}/{itemId}")
     public ResponseEntity<?> NewBorrows(@PathVariable("userId") long userId, @PathVariable("itemId") long itemId) {
 
-        Optional<Item> _item = itemRepository.findById(itemId);
+        Item _item = itemRepository.findById(itemId).get();
         Users _user = usersRepository.findById(userId).get();
         
-        if (!_user.equals(null) && _item.isPresent()) {
+        if (!_user.equals(null) && !_item.equals(null)) {
             if (Math.round(_user.getNbBorrow() + 1) <= 3) {
                 
                 Borrow _borrow = new Borrow();
@@ -119,13 +119,12 @@ public class UserController {
                 _borrow.setDateTake(LocalDate.now());
                 _borrow.setQuantity(1);
                 _borrow.setUsers(_user);
+                _item.getBorrows().add(_borrow);
                 borrowRepository.save(_borrow);
-
-                _item.get().getBorrows().add(_borrow);
 
                 _user.setNbBorrow(Math.round(_user.getNbBorrow() + 1));
                 usersRepository.save(_user);
-                return new ResponseEntity<>(HttpStatus.OK);
+                return new ResponseEntity<>(HttpStatus.CREATED);
 
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Maximum de réservations atteint");

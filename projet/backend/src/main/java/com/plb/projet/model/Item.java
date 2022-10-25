@@ -59,7 +59,7 @@ public class Item {
 
     @ManyToMany
     @JsonIgnore
-    @JoinTable(name = "borrow_item", joinColumns = @JoinColumn(name = "borrow_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
+    @JoinTable(name = "borrow_item", joinColumns = @JoinColumn(name = "item_id"), inverseJoinColumns = @JoinColumn(name = "borrow_id"))
     private Set<Borrow> borrows = new HashSet<>();
 
     /* CONTRUCTOR */

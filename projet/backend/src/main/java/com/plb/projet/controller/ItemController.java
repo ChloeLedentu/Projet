@@ -64,7 +64,15 @@ public class ItemController {
 
     @GetMapping("/item/{id}")
     public ResponseEntity<Item> getItemById(@PathVariable("id") long id) {
+        
         Optional<Item> itemData = itemRepository.findById(id);
+        
+        Integer quantity = borrowRepository.sumQuantity(id);
+        
+        //calcul quantity with borrow
+        if(quantity != null) {
+           itemData.get().setQuantity(Math.round(itemData.get().getQuantity() - quantity));
+        }
 
         if (itemData.isPresent())
             return new ResponseEntity<>(itemData.get(), HttpStatus.OK);

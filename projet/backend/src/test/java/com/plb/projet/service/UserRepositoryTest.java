@@ -42,4 +42,5 @@ public class UserRepositoryTest {
        Optional<Users> findUser = usersRepository.findByEmail("toto@f.c");
        assertEquals("titi", findUser.get().getLastname());
     }
+
 }
