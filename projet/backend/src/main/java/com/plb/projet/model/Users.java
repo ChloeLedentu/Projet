@@ -7,9 +7,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.Generated;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.micrometer.core.lang.Nullable;
