@@ -11,7 +11,7 @@ const findByTitleOrAuthor = (search: string) =>  {
 };
 
 const findById = (id: any) => {
-    return http.get<ItemData>(`/item${id}`);
+    return http.get<ItemData>(`/item/${id}`);
 };
 
 const findByNameItem = (name: string) => {

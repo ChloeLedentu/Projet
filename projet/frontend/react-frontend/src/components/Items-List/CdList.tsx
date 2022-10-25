@@ -48,15 +48,17 @@ const CdList: React.FC = () => {
                                         </div>
                                         <div className="col-md-7 pb-4">
                                             <h5 className="card-category text-primary text-capitalize">{item.title}</h5>
-                                            <p className="card-description ">{item.description.substring(0, 250)}... 
-                                                <Link className="btn font-weight-bold" to={"/item/"+item.id}>
+                                            <p className="card-description ">{item.description.substring(0, 250)}...
+                                                <Link className="btn font-weight-bold" to={"/item/" + item.id}>
                                                     Voir plus
                                                 </Link>
                                             </p>
                                             {currentUser && (
                                                 <div>
                                                     <p className="card-description">Quantité restante : {item.quantity}</p>
-                                                    <a className="btn btn-warning btn-round" href="#"><FcNext />Réserver</a>
+                                                    <Link className="btn btn-warning btn-round" to={"/item/" + item.id}>
+                                                        <FcNext />Réserver
+                                                    </Link>
                                                 </div>
                                             )}
                                         </div>

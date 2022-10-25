@@ -56,7 +56,9 @@ const BooksList: React.FC = () => {
                                             {currentUser && (
                                                 <div>
                                                     <p className="card-description">Quantité restante : {item.quantity}</p>
-                                                    <a className="btn btn-warning btn-round" href="#"><FcNext />Réserver</a>
+                                                    <Link className="btn btn-warning btn-round" to={"/item/" + item.id}>
+                                                        <FcNext />Réserver
+                                                    </Link>
                                                 </div>
                                             )}
 

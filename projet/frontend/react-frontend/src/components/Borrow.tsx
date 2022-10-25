@@ -1,5 +1,7 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import React, { useState, useEffect, ChangeEvent, ErrorInfo } from "react";
+import { useParams, useNavigate, Link, NavigateFunction } from 'react-router-dom';
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import * as AuthService from "../services/AuthService";
 import { getCurrentUser } from "../services/AuthService";
 import UserService from "../services/UserService";
@@ -7,32 +9,52 @@ import BorrowData from "../types/Borrow";
 import UserData from "../types/User";
 import Moment from 'moment';
 import BorrowService from "../services/BorrowService";
+import { ErrorCallback } from "typescript";
 
-const BorrowList: React.FC = () => {
+type Props = {}
+
+const BorrowList: React.FC<Props> = () => {
+    let navigate: NavigateFunction = useNavigate();
 
     const [borrows, setBorrows] = useState<Array<BorrowData>>([]);
     const [currentUser, setCurrentUser] = useState<UserData | undefined>(undefined);
+    const initialValues: { id: number; quantity: number; } = { id: 0, quantity: 0 };
+    const [message, setMessage] = useState<string>("");
+    
+
+    const validationSchema = Yup.object().shape({
+        quantity: Yup.number()
+            .max(3, '3 réservations maximum')
+            .min(1, 'Impossible de ne pas avoir de quantité à rendre')
+            .required('La quantité est requise')
+    });
 
     const retrieveBorrows = () => {
         UserService.findBorrow(getCurrentUser().id)
             .then((response: any) => {
                 setBorrows(response.data);
-                
             })
             .catch((e: Error) => {
                 console.log(e.message);
             });
     };
- 
-        /* 
-        id du borrow -> update return date à now
-        const returnBorrow = () => {
-            BorrowService.returnBorrow(id)
-            .catch((e: Error) => {
-                console.log(e.message);
-            });
-            window.location.reload();
-        };*/
+
+
+    const BorrowReturn = (formValue: { id: number; quantity: number }) => {
+        const {id, quantity } = formValue;
+        setMessage("");
+        //réussir a ajouter l'id du borrow choisi
+
+        BorrowService.returnBorrow(2, quantity).then(
+            () => {
+                window.location.reload();
+            },
+            (error) => {
+                setMessage(error.response.data);
+            }
+        );
+    };
+
 
     useEffect(() => {
         const user = AuthService.getCurrentUser();
@@ -69,9 +91,34 @@ const BorrowList: React.FC = () => {
                                                         {borrow.dateReturn ?
                                                             (<p><>Date de retour : {Moment(borrow.dateReturn).format("DD MM YYYY")}</></p>)
                                                             :
-                                                            (<button type="submit" className="btn btn-primary btn-block" >
-                                                                Rendre
-                                                            </button>
+                                                            (
+                                                                <Formik
+                                                                    validationSchema={validationSchema}
+                                                                   initialValues={initialValues}
+                                                                    onSubmit={BorrowReturn}
+                                                                >
+                                                                    <Form>
+                                                                        <div className="form-group">
+                                                                            <label htmlFor="quantity">Quantité</label>
+                                                                            <Field name="quantity" type="number" className="form-control" />
+                                                                            <ErrorMessage
+                                                                                name="quantity"
+                                                                                component="div"
+                                                                                className="alert alert-danger"
+                                                                            />
+                                                                        </div>
+                                                                        <button type="submit" className="btn btn-primary btn-block">
+                                                                            Rendre
+                                                                        </button>
+                                                                        {message && (
+                                                                            <div className="form-group">
+                                                                                <div className="alert alert-danger" role="alert">
+                                                                                    {message}
+                                                                                </div>
+                                                                            </div>
+                                                                        )}
+                                                                    </Form>
+                                                                </Formik>
                                                             )
                                                         }
 

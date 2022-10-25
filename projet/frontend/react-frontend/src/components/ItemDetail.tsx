@@ -3,6 +3,9 @@ import { useParams } from 'react-router-dom';
 import ItemService from "../services/ItemService";
 import { FcNext } from 'react-icons/fc';
 import Moment from 'moment';
+import UserData from "../types/User";
+import * as AuthService from "../services/AuthService";
+import BorrowService from "../services/BorrowService";
 
 const ItemDetail: React.FC = () => {
 
@@ -20,12 +23,17 @@ const ItemDetail: React.FC = () => {
         duration: 0,
         type: '',
         nbTitle: 0
-    }
-
+    };
     const [Type, setType] = useState<string>("");
-
     const [currentItem, setCurrentItem] = useState(initItem);
     const [message, setMessage] = useState<string>("");
+    const [currentUser, setCurrentUser] = useState<UserData | undefined>(undefined);
+    const initBorrow = {
+        dateTake: Date,
+        dateReturn: Date,
+        quantity: 0,
+        items: []
+    };
 
     const getItem = (id: string) => {
         ItemService.findById(id)
@@ -40,8 +48,23 @@ const ItemDetail: React.FC = () => {
             });
     };
 
+    const newborrow = () => {
+        BorrowService.newBorrow(currentUser!.id, currentItem.id).then(
+            () => { 
+                window.location.reload();
+            },
+            (error) => {
+                setMessage(error.response.data);
+            }
+        )
+
+    };
+
     useEffect(() => {
+        const user = AuthService.getCurrentUser();
+        if (user) setCurrentUser(user);
         if (id) getItem(id);
+
     }, [id]);
 
     return (
@@ -62,14 +85,23 @@ const ItemDetail: React.FC = () => {
                                     <p>{currentItem.description}</p>
                                     <p>Sortie le {Moment(currentItem.dateRelease).format("DD-MM-YYYY")}</p>
                                     {
-                                        Type === "Book" ? <div><p><u>Autre Information :</u></p><p>Numéro ISBN : {currentItem.numISBN}</p></div>
-                                            : Type === "Dvd" ? <div><p><u>Autre Information :</u></p><p className="text-info">{currentItem.type}</p><p>Durée: {currentItem.duration} min</p></div>
-                                                : Type === "Cd" ? <div><p><u>Autre Information :</u></p><p>Nombre de titres : {currentItem.nbTitle}</p></div>
-                                                    : <div></div>
+                                        Type === "Book" ? <><p><u>Autre Information :</u></p><p>Numéro ISBN : {currentItem.numISBN}</p></>
+                                            : Type === "Dvd" ? <><p><u>Autre Information :</u></p><p className="text-info">{currentItem.type}</p><p>Durée: {currentItem.duration} min</p></>
+                                                : Type === "Cd" ? <><p><u>Autre Information :</u></p><p>Nombre de titres : {currentItem.nbTitle}</p></>
+                                                    : <></>
                                     }
                                     <hr />
                                     <p className="card-description">Quantité restante : {currentItem.quantity}</p>
-                                    <a className="btn btn-warning btn-round" href="#"><FcNext />Réserver</a>
+                                    {currentUser && (
+                                        <button className="btn btn-warning btn-round" onClick={newborrow}><FcNext />Réserver</button>
+                                    )}
+                                    {message && (
+                                        <div className="form-group">
+                                            <div className="alert alert-danger" role="alert">
+                                                {message}
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
 
                             </div>
