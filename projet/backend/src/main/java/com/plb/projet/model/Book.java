@@ -12,7 +12,7 @@ import javax.persistence.Table;
 public class Book extends Item {
 
     @Column(name = "numISBN")
-    private long numISBN;
+    private Long numISBN;
 
     /* CONSTRUCTOR */
 
@@ -21,7 +21,7 @@ public class Book extends Item {
     }
 
     public Book(String author, String title, String description, String image, LocalDate createdOn, LocalDate dateRelease, 
-            int quantity, Set<Borrow> borrows, long numISBN) {
+            int quantity, Set<Borrow> borrows, Long numISBN) {
         super(author, title, description, image, createdOn, dateRelease, quantity, borrows);
 
         this.numISBN = numISBN;
@@ -29,11 +29,11 @@ public class Book extends Item {
 
     /* GETTERS SETTERS */
 
-    public long getNumISBN() {
+    public Long getNumISBN() {
         return numISBN;
     }
 
-    public void setNumISBN(long numISBN) {
+    public void setNumISBN(Long numISBN) {
         this.numISBN = numISBN;
     }
 
