@@ -25,7 +25,7 @@ import com.plb.projet.security.jwt.JwtUtils;
 import com.plb.projet.security.services.UserDetailsImpl;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:8081")
 @RequestMapping("/api/auth")
 public class AuthController {
 
