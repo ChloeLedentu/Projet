@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.plb.projet.model.Borrow;
 import com.plb.projet.model.Item;
+import com.plb.projet.repository.BorrowRepository;
 import com.plb.projet.repository.ItemRepository;
 
 @RestController
@@ -24,12 +26,15 @@ public class ItemController {
 
     @Autowired
     ItemRepository itemRepository;
+    @Autowired
+    BorrowRepository borrowRepository;
     
 
     @GetMapping("/items{sortBy}")
     public ResponseEntity<List<Item>> getItems(@PathVariable("sortBy") String sortBy) {
 
         List<Item> items = new ArrayList<Item>();
+        
         if (sortBy.isEmpty())
             itemRepository.findAllByOrderByCreatedOnAsc().forEach(items::add);
         else if (sortBy.equals("sortByTitle"))
@@ -57,8 +62,8 @@ public class ItemController {
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
-    @GetMapping("/item")
-    public ResponseEntity<Item> getItemById(@RequestParam long id) {
+    @GetMapping("/item/{id}")
+    public ResponseEntity<Item> getItemById(@PathVariable("id") long id) {
         Optional<Item> itemData = itemRepository.findById(id);
 
         if (itemData.isPresent())
