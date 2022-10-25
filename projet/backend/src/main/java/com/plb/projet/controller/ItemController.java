@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.plb.projet.exception.ResourceNotFoundException;
 import com.plb.projet.model.Item;
 import com.plb.projet.repository.BorrowRepository;
 import com.plb.projet.repository.ItemRepository;
@@ -26,13 +27,12 @@ public class ItemController {
     ItemRepository itemRepository;
     @Autowired
     BorrowRepository borrowRepository;
-    
 
     @GetMapping("/items{sortBy}")
     public ResponseEntity<List<Item>> getItems(@PathVariable("sortBy") String sortBy) {
 
         List<Item> items = new ArrayList<Item>();
-        
+
         if (sortBy.isEmpty())
             itemRepository.findAllByOrderByCreatedOnAsc().forEach(items::add);
         else if (sortBy.equals("sortByTitle"))
@@ -62,28 +62,25 @@ public class ItemController {
 
     @GetMapping("/item/{id}")
     public ResponseEntity<Item> getItemById(@PathVariable("id") long id) {
-        
-        Optional<Item> itemData = itemRepository.findById(id);
-        
+
+        Optional<Item> itemData = Optional.of(itemRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Not found item with id = " + id)));
+
         Integer quantity = borrowRepository.sumQuantity(id);
-        
-        //calcul quantity with borrow
-        if(quantity != null) {
-           itemData.get().setQuantity(Math.round(itemData.get().getQuantity() - quantity));
+
+        // calcul quantity with borrow
+        if (quantity != null) {
+            itemData.get().setQuantity(Math.round(itemData.get().getQuantity() - quantity));
         }
 
-        if (itemData.isPresent())
-            return new ResponseEntity<>(itemData.get(), HttpStatus.OK);
-        else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(itemData.get(), HttpStatus.OK);
+
     }
 
     @GetMapping("/{name}")
     public ResponseEntity<List<Item>> getItemByName(@PathVariable("name") String name) {
 
-        if (name.isEmpty())
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        else if (name.equals("Dvd"))
+        if (name.equals("Dvd"))
             return new ResponseEntity<>(itemRepository.findAllDvd(), HttpStatus.OK);
         else if (name.equals("Cd"))
             return new ResponseEntity<>(itemRepository.findAllCd(), HttpStatus.OK);

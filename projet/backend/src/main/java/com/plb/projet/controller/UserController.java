@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.plb.projet.exception.ResourceNotFoundException;
 import com.plb.projet.model.Borrow;
 import com.plb.projet.model.Item;
 import com.plb.projet.model.Users;
@@ -44,12 +45,10 @@ public class UserController {
     @GetMapping("/profil/{email}")
     public ResponseEntity<Users> userAccess(@PathVariable("email") String email) {
 
-        Optional<Users> usersData = usersRepository.findByEmail(email);
+        Optional<Users> usersData = Optional.of(usersRepository.findByEmail(email))
+                .orElseThrow(() -> new ResourceNotFoundException("Not found user with email = " + email));
 
-        if (usersData.equals(null))
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        else
-            return new ResponseEntity<>(usersData.get(), HttpStatus.OK);
+        return new ResponseEntity<>(usersData.get(), HttpStatus.OK);
 
     }
 
@@ -71,66 +70,60 @@ public class UserController {
     public ResponseEntity<?> borrowUpdateDateReturn(@PathVariable(value = "id") long id,
             @PathVariable(value = "quantity") int quantity) {
 
-        Optional<Borrow> _borrow = borrowRepository.findById(id);
+        Optional<Borrow> _borrow = Optional.of(borrowRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Not found borrow with id = " + id)));
 
-        // the borrow of a user exist
-        if (_borrow.isPresent()) {
-            // recup user
-            Optional<Users> _user = usersRepository.findById(_borrow.get().getUsers().getId());
+        // recup user
+        Optional<Users> _user = usersRepository.findById(_borrow.get().getUsers().getId());
 
-            // Calcul : quantite return + number of borrow of the user
-            _user.get().setNbBorrow(Math.round(_user.get().getNbBorrow() - quantity));
+        // Calcul : quantite return + number of borrow of the user
+        _user.get().setNbBorrow(Math.round(_user.get().getNbBorrow() - quantity));
 
-            if (_user.get().getNbBorrow() <= 3) {
-                // remove the quantity of borrowing chosen
-                _borrow.get().setQuantity(Math.round(_borrow.get().getQuantity() - quantity));
-                // if borrow quantity = 0
-                if (_borrow.get().getQuantity() == 0) {
-                    // add DateReturn
-                    _borrow.get().setDateReturn(LocalDate.now());
-                }
-            } else {
-                // no borrow found
-                return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Erreur de quantité");
+        if (_user.get().getNbBorrow() <= 3) {
+            // remove the quantity of borrowing chosen
+            _borrow.get().setQuantity(Math.round(_borrow.get().getQuantity() - quantity));
+            // if borrow quantity = 0
+            if (_borrow.get().getQuantity() == 0) {
+                // add DateReturn
+                _borrow.get().setDateReturn(LocalDate.now());
             }
-
-            // save
-            usersRepository.save(_user.get());
-            borrowRepository.save(_borrow.get());
-            return new ResponseEntity<>(HttpStatus.OK);
-
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Réservation non trouvé");
+            // no borrow found
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Erreur de quantité");
         }
+
+        // save
+        usersRepository.save(_user.get());
+        borrowRepository.save(_borrow.get());
+        return new ResponseEntity<>(HttpStatus.OK);
 
     }
 
     @PostMapping("/borrow/new/{userId}/{itemId}")
     public ResponseEntity<?> NewBorrows(@PathVariable("userId") long userId, @PathVariable("itemId") long itemId) {
 
-        Item _item = itemRepository.findById(itemId).get();
-        Users _user = usersRepository.findById(userId).get();
-        
-        if (!_user.equals(null) && !_item.equals(null)) {
-            if (Math.round(_user.getNbBorrow() + 1) <= 3) {
-                
-                Borrow _borrow = new Borrow();
-                _borrow.setDateReturn(null);
-                _borrow.setDateTake(LocalDate.now());
-                _borrow.setQuantity(1);
-                _borrow.setUsers(_user);
-                _item.getBorrows().add(_borrow);
-                borrowRepository.save(_borrow);
+        Item _item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new ResourceNotFoundException("Not found item with id = " + itemId));
 
-                _user.setNbBorrow(Math.round(_user.getNbBorrow() + 1));
-                usersRepository.save(_user);
-                return new ResponseEntity<>(HttpStatus.CREATED);
+        Users _user = usersRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Not found user with id = " + userId));
 
-            } else {
-                return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Maximum de réservations atteint");
-            }
+        if (Math.round(_user.getNbBorrow() + 1) <= 3) {
+
+            Borrow _borrow = new Borrow();
+            _borrow.setDateReturn(null);
+            _borrow.setDateTake(LocalDate.now());
+            _borrow.setQuantity(1);
+            _borrow.setUsers(_user);
+            _item.getBorrows().add(_borrow);
+            borrowRepository.save(_borrow);
+
+            _user.setNbBorrow(Math.round(_user.getNbBorrow() + 1));
+            usersRepository.save(_user);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Réservation non trouvé");
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Maximum de réservations atteint");
         }
 
     }
