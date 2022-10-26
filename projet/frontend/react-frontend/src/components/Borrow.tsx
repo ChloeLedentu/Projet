@@ -44,7 +44,7 @@ const BorrowList: React.FC<Props> = () => {
         const {id, quantity } = formValue;
         setMessage("");
 
-        // reussir a recup l'id du form pour changer le 1
+        // reussir a recup l'index de borrow du form pour changer le 1 en id
         BorrowService.returnBorrow(1, quantity).then(
             () => {
                 window.location.reload();
