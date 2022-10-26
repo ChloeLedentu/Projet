@@ -79,7 +79,7 @@ public class UserController {
         // Calcul : quantite return + number of borrow of the user
         _user.get().setNbBorrow(Math.round(_user.get().getNbBorrow() - quantity));
 
-        if (_user.get().getNbBorrow() <= 3) {
+        if (_user.get().getNbBorrow() <= 3 && _user.get().getNbBorrow() >= 0) {
             // remove the quantity of borrowing chosen
             _borrow.get().setQuantity(Math.round(_borrow.get().getQuantity() - quantity));
             // if borrow quantity = 0
