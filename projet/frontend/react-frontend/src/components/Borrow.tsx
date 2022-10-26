@@ -18,7 +18,7 @@ const BorrowList: React.FC<Props> = () => {
 
     const [borrows, setBorrows] = useState<Array<BorrowData>>([]);
     const [currentUser, setCurrentUser] = useState<UserData | undefined>(undefined);
-    const initialValues: { id: number; quantity: number; } = { id: 0, quantity: 0 };
+    const initialValues: {quantity: number; } = { quantity: 0 };
     const [message, setMessage] = useState<string>("");
     
 
@@ -40,11 +40,11 @@ const BorrowList: React.FC<Props> = () => {
     };
 
 
-    const BorrowReturn = (formValue: { id: number; quantity: number }) => {
-        const {id, quantity } = formValue;
+    const BorrowReturn = (formValue: {quantity: number }) => {
+        const {quantity } = formValue;
         setMessage("");
 
-        BorrowService.returnBorrow(2, quantity).then(
+        BorrowService.returnBorrow(currentUser!.id, quantity).then(
             () => {
                 window.location.reload();
             },
